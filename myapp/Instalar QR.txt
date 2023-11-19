@@ -1,0 +1,159 @@
+----------------------------------------------------------------------
+                    GENERADOR DE CODIGO QR
+----------------------------------------------------------------------
+
+1. Instalar angularx-qrcode (dentro de la carpeta de la app)
+
+npm install angularx-qrcode --save --force
+npm i --save-dev @types/qrcode --force
+
+----------------------------------------------------------------------
+
+2. Importar QRCodeModule a su componente (myapp\src\app\home\home.module.ts)
+
+import { QRCodeModule } from 'angularx-qrcode';
+
+//agregar a Imports: [] 
+
+QRCodeModule
+
+----------------------------------------------------------------------
+
+3. Implementar en html
+
+<qrcode [qrdata]="INFO_PARA_QR" [width]="256" [allowEmptyString]="true"></qrcode>
+
+----------------------------------------------------------------------
+
+
+
+
+----------------------------------------------------------------------
+                    LECTOR DE CODIGO QR 
+----------------------------------------------------------------------
+
+1. Instalar CAPACITOR y agregar la plataforma android (dentro de la carpeta de la app)
+
+npm install @capacitor/core @capacitor/cli --force
+npm install @capacitor/android --force
+npx cap add android
+
+----------------------------------------------------------------------
+
+2. Modificar environments.prod.ts (myapp\src\environments\environment.prod.ts)
+
+  copiar el contenido del archivo environment.ts a el archivo environment.prod.ts y cambiar a true
+
+----------------------------------------------------------------------
+
+3. Instalar Mlkit Barcode Scanner (dentro de la carpeta de la app)
+
+npm install @capacitor-mlkit/barcode-scanning --force
+ionic build
+npx cap sync
+
+----------------------------------------------------------------------
+
+4. Actualizar el archivo AndroidManifest.xml (myapp\android\app\src\main\AndroidManifest.xml)
+
+//DENTRO DEL TAG APPLICATION
+        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode"/>
+
+//ABAJO DEL COMENTARIO PERMISSIONS
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+
+----------------------------------------------------------------------
+
+5. Importar al componente donde lo vayan a utilizar
+
+ionic g page qrscanner
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+
+----------------------------------------------------------------------
+
+6. Copiar los metodos definidos por la documentacion para activar y desactivar el lector
+
+  async startScan() {
+    document.body.classList.add('barcode-scanner-active');
+    const listener = await BarcodeScanner.addListener('barcodeScanned', async (result) => {
+      if (result.barcode.displayValue) {
+        this.SU_VARIABLE = result.barcode.displayValue; 
+        this.stopScan(); 
+      }
+    });
+    await BarcodeScanner.startScan();
+  }
+
+  async stopScan() {
+    document.body.classList.remove('barcode-scanner-active');
+    await BarcodeScanner.removeAllListeners();
+    await BarcodeScanner.stopScan();
+  }
+
+------------------------------------------------------------------------
+
+7. Implementar detector de cambios (Opcional)
+
+import { ChangeDetectorRef } from '@angular/core';
+
+constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
+//DONDE QUIERAN DETECTAR EL CAMBIO
+this.changeDetectorRef.detectChanges();
+
+------------------------------------------------------------------------
+
+8. Copiar los estilos en global.scss (myapp\src\global.scss)
+
+body.barcode-scanner-active {
+    visibility: hidden;
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
+  
+  // Show only the barcode scanner modal
+  .barcode-scanner-modal {
+    visibility: visible;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .barcode-scanner-modal {
+      --background: transparent;
+      --ion-background-color: transparent;
+    }
+  }
+
+------------------------------------------------------------------------
+
+9. Modificar HTML del componente para activar el scanner
+
+  <ion-button (click)="METODO_SCANNER()" expand="block" fill="solid" shape="round">
+    ESCANEAR
+  </ion-button>
+
+  <label> {{ lecturaQr }} </label>
+
+  **agregar routerlink desde home**
+
+------------------------------------------------------------------------
+
+10. crear archivo local.properties (si es que no lo ven)
+
+local.properties
+
+//remplazar SU_USUARIO con el nombre de su usuario en windows
+sdk.dir=C\:\\Users\\SU_USUARIO\\AppData\\Local\\Android\\Sdk
+
+------------------------------------------------------------------------
+
+11. Construir y lanzar en Android Studio
+
+ionic build
+npx cap sync
+npx cap open android
+
+------------------------------------------------------------------------
+
+**DOCUMENTACION Mlkit barcode Scanner**
+https://capawesome.io/plugins/mlkit/barcode-scanning/

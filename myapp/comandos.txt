@@ -1,0 +1,57 @@
+
+ionic start myapp
+
+cd a la carpeta del proyecto
+
+-----------------------------------------------------------------------------------------------------
+
+1. Instalar angular Fire 
+npm install firebase @angular/fire --force
+
+-----------------------------------------------------------------------------------------------------
+
+2. Actualizar environment.ts (myapp\src\environments\environment.ts)
+actualizar archivo con credenciales de firebase
+
+-----------------------------------------------------------------------------------------------------
+
+3. Actualizar app.module.ts (myapp\src\app\app.module.ts)
+
+import { environment } from '../environments/environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getDatabase, provideDatabase } from '@angular/fire/database'; 
+
+
+// pegar en imports:[]
+provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+provideDatabase(() => getDatabase())
+
+-----------------------------------------------------------------------------------------------------
+
+4. Crear servicio para firebase
+
+ionic g service servicio/firebase
+
+-----------------------------------------------------------------------------------------------------
+
+5. Importar librerias firebase al servicio y preparar el constructor
+
+import { Database, ref, get, set } from '@angular/fire/database';
+
+constructor(private db: Database) { }
+
+-----------------------------------------------------------------------------------------------------
+
+6. Crear clase
+
+export class Usuario {
+    nombre: string = '';
+    apellido: string = '';
+    rut: string = '';
+    sede: string = '';
+  }
+
+----------------------------------------------------------------------
+
+
+

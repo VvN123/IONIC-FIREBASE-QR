@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>pagina2</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">pagina2</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-input [(ngModel)]="inputRut" type="text" placeholder="RUT" fill="solid"></ion-input>
+  <ion-input [(ngModel)]="inputNombre" type="text" placeholder="nombre" fill="solid"></ion-input>
+  <ion-input [(ngModel)]="inputApellido" type="text" placeholder="apellido" fill="solid"></ion-input>
+  <ion-input [(ngModel)]="inputSede" type="text" placeholder="sede" fill="solid"></ion-input>
+  
+  <ion-button (click)="crearUsuario()" expand="block" fill="solid" shape="round">
+    Crear Usuario
+  </ion-button>
+
+</ion-content>

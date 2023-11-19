@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <br><br>
+  <ion-input [(ngModel)]="inputRut" type="text" placeholder="RUT" fill="solid"></ion-input>
+  <br>
+  <ion-button (click)="obtenerInfo()" expand="block" fill="solid" shape="round">
+    Buscar RUT
+  </ion-button>
+  <br>
+  <p> {{ userInfo.nombre }} </p>
+  <p> {{ userInfo.apellido }} </p>
+  <p> {{ userInfo.rut }} </p>
+  <p> {{ userInfo.sede }} </p>
+
+  <qrcode *ngIf="userInfo.nombre" [qrdata]="userInfo.nombre" [width]="256" [allowEmptyString]="true"></qrcode>
+  <br>
+  <ion-button [routerLink]="['/qrscanner']" expand="block" fill="solid" shape="round">
+    PAGINA QR
+  </ion-button>
+
+  <ion-button [routerLink]="['/pagina2']" expand="block" fill="solid" shape="round">
+    SUBIR INFO A FIREBASE
+  </ion-button>
+
+</ion-content>

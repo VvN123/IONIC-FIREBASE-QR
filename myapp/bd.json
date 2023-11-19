@@ -1,0 +1,32 @@
+{
+  "usuarios": {
+    "14598823-2": {
+      "nombre": "tomas",
+      "apellido": "rosales",
+      "rut": "14598823-2",
+      "sede": "cerrillos"
+    },
+    "18593139-2": {
+      "nombre": "juan",
+      "apellido": "araya",
+      "rut": "18593139-2",
+      "sede": "maipu"
+    },
+    "14593539-2": {
+      "nombre": "leslie",
+      "apellido": "rojas",
+      "rut": "14593539-2",
+      "sede": "maipu"
+    }
+  },
+  "clases": {
+    "py1112-01d": {
+      "nombre": "programacion web",
+      "id": "py1112-01d"
+    },
+    "py4412-23f": {
+      "nombre": "base de datos",
+      "id": "py4412-23f"
+    }
+  }
+}
